@@ -1,0 +1,25 @@
+networks:
+  proxy:
+    external: true
+  authentik:
+    name: ${NETWORKS_AUTHENTIK_NAME:-authentik}
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: ${NETWORKS_SOCKET_PROXY_SUBNET_IPV4:-172.30.0.0/24}
+      - subnet: ${NETWORKS_SOCKET_PROXY_SUBNET_IPV6:-fd00:dead:beef:f0::/64}
+    attachable: true
+    internal: true
+  authentik-socket:
+    name: ${NETWORKS_AUTHENTIK_SOCKET_NAME:-authentik-socket}
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: ${NETWORKS_SOCKET_PROXY_SUBNET_IPV4:-172.30.1.0/24}
+      - subnet: ${NETWORKS_SOCKET_PROXY_SUBNET_IPV6:-fd00:dead:beef:f1::/64}
+    attachable: true
+    internal: true

@@ -1,0 +1,6 @@
+include:
+  - compose/authentik-server.yml
+  - compose/authentik-worker.yml
+  - compose/authentik-database.yml
+  - compose/authentik-socketproxy.yml
+  - compose/networks.yml
