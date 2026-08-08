@@ -1,10 +1,10 @@
+# Vorlage: Diese Datei in das von Traefiks file-Provider überwachte
+# Konfigurationsverzeichnis kopieren und Traefik neu laden.
 http:
-
   middlewares:
-
     authentik:
       forwardAuth:
-        address: "http://authentik-server:9000/outpost.goauthentik.io/auth/traefik"
+        address: http://authentik-server:9000/outpost.goauthentik.io/auth/traefik
         trustForwardHeader: true
         authResponseHeaders:
           - X-authentik-username
@@ -19,4 +19,5 @@ http:
           - X-authentik-meta-provider
           - X-authentik-meta-app
           - X-authentik-meta-version
-
+          # Nur aktivieren, wenn der Proxy-Provider HTTP Basic Authentication sendet:
+          # - authorization
