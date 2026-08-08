@@ -84,7 +84,7 @@ labels:
   traefik.http.routers.meine-app.middlewares: authentik@file
 ```
 
-Bei einer Single-Application-Forward-Auth muss zusätzlich ein höher priorisierter Router für `PathPrefix(`/outpost.goauthentik.io/`)` auf Authentik zeigen. Authentik kann die erforderlichen Router bei korrekt konfiguriertem eingebettetem Outpost über Docker-Labels verwalten. Wird das manuell erledigt, darf dieser Pfad selbst nicht wieder durch die Authentik-Middleware geschützt werden.
+Bei einer Single-Application-Forward-Auth muss zusätzlich ein höher priorisierter Router mit der Regel `PathPrefix(\`/outpost.goauthentik.io/\`)` auf Authentik zeigen. Authentik kann die erforderlichen Router bei korrekt konfiguriertem eingebettetem Outpost über Docker-Labels verwalten. Wird das manuell erledigt, darf dieser Pfad selbst nicht wieder durch die Authentik-Middleware geschützt werden.
 
 Die Vorlage nutzt intern:
 
