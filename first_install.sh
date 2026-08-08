@@ -41,7 +41,7 @@ prompt proxy_network "Name des vorhandenen externen Traefik-Netzwerks" "proxy"
 prompt cert_resolver "Traefik-Certificate-Resolver" "cloudflare_resolver"
 prompt trusted_proxies "Vertrauenswürdige Traefik-IP/CIDRs (kommagetrennt)" "172.31.191.254/32,fd00:1:be:a:7001:0:3e:7fff/128"
 prompt server_proxy_ipv4 "IPv4 von authentik-server im Traefik-Netz" "172.31.191.128"
-prompt server_proxy_ipv6 "IPv6 von authentik-server im Traefik-Netz" "fd00:1:be:a:7001:0:3e:128"
+prompt server_proxy_ipv6 "IPv6 von authentik-server im Traefik-Netz" "fd00:1:be:a:7001:0:3e:7128"
 
 pg_pass="$(openssl rand -base64 36 | tr -d '\n')"
 secret_key="$(openssl rand -base64 60 | tr -d '\n')"
