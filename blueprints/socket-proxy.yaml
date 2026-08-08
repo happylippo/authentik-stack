@@ -11,4 +11,4 @@ entries:
       name: Local Docker connection
     attrs:
       local: false
-      url: http://authentik-socketproxy:2375
+      url: http://authentik-socket-proxy:2375

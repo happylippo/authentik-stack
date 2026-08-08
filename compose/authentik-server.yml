@@ -3,33 +3,31 @@ services:
     container_name: ${SERVICES_SERVER_CONTAINER_NAME:-authentik-server}
     command: server
     depends_on:
-      postgresql:
+      authentik-database:
         condition: service_healthy
     env_file:
-    - .env
+      - .env
     environment:
       AUTHENTIK_POSTGRESQL__HOST: authentik-database
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS:?database password required}
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2026.5}
-#    ports:          ### nur ohne proxy
-#    - ${COMPOSE_PORT_HTTP:-9000}:9000
-#    - ${COMPOSE_PORT_HTTPS:-9443}:9443
     networks:
       authentik:
-        ipv4_address: ${SERVICES_TRAEFIK_NETWORKS_SOCKET_PROXY_IPV4:-172.30.0.2}
-        ipv6_address: ${SERVICES_TRAEFIK_NETWORKS_SOCKET_PROXY_IPV6:-fd00:dead:beef:f0::2}
+        ipv4_address: ${SERVICES_SERVER_IPV4:-172.30.0.2}
+        ipv6_address: ${SERVICES_SERVER_IPV6:-fd00:dead:beef:f0::2}
       proxy:
-        ipv4_address: ${SERVICES_TRAEFIK_NETWORKS_PROXY_IPV4:-172.31.191.128}
-        ipv6_address: ${SERVICES_TRAEFIK_NETWORKS_PROXY_IPV6:-fd00:1:be:a:7001:0:3e:128}
+        ipv4_address: ${SERVICES_SERVER_PROXY_IPV4:-172.31.191.128}
+        ipv6_address: ${SERVICES_SERVER_PROXY_IPV6:-fd00:1:be:a:7001:0:3e:128}
     restart: unless-stopped
     shm_size: 512mb
     labels:
       traefik.enable: "true"
-      traefik.http.routers.authentik.rule: ${SERVICES_AUTHENTIK_LABELS_AUTHENTIK_HOST:-HOST(`authentik.yourdomain.com`)}
-      traefik.http.routers.traefik-dashboard.middlewares: default@file crowdsec@file
+      traefik.docker.network: ${NETWORKS_PROXY_NAME:-proxy}
+      traefik.http.routers.authentik.rule: ${SERVICES_AUTHENTIK_LABELS_AUTHENTIK_HOST:-Host(`authentik.yourdomain.com`)}
+      traefik.http.routers.authentik.middlewares: default@file,crowdsec@file
       traefik.http.routers.authentik.entrypoints: websecure
       traefik.http.routers.authentik.tls: "true"
       traefik.http.routers.authentik.tls.certresolver: ${TRAEFIK_CERTRESOLVER:-cloudflare_resolver}
@@ -37,5 +35,5 @@ services:
       traefik.http.routers.authentik.tls.domains[0].sans: ${TRAEFIK_CERT_WILDCARD:-*.yourdomain.com}
       traefik.http.services.authentik.loadbalancer.server.port: "9000"
     volumes:
-    - ${ABSOLUTE_PATH}/data:/data
-    - ${ABSOLUTE_PATH}/custom-templates:/templates
+      - ${ABSOLUTE_PATH}/data:/data
+      - ${ABSOLUTE_PATH}/custom-templates:/templates
