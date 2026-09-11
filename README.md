@@ -98,7 +98,7 @@ Bei einer Single-Application-Forward-Auth muss zusätzlich ein höher priorisier
       traefik.http.routers.traefik-dashboard.tls.domains[0].main: ${TRAEFIK_CERT_DOMAIN}
       traefik.http.routers.traefik-dashboard.tls.domains[0].sans: ${TRAEFIK_CERT_WILDCARD}
       traefik.http.routers.traefik-dashboard-authentik-outpost.entrypoints: websecure
-      traefik.http.routers.traefik-dashboard-authentik-outpost.rule: "${SERVICES_TRAEFIK_LABELS_TRAEFIK_HOST:-Host(`traefik.fr3i.de`)} && PathPrefix(`/outpost.goauthentik.io/`)">
+      traefik.http.routers.traefik-dashboard-authentik-outpost.rule: "${SERVICES_TRAEFIK_LABELS_TRAEFIK_HOST:-Host(`traefik.yourdomain.com`)} && PathPrefix(`/outpost.goauthentik.io/`)">
       traefik.http.routers.traefik-dashboard-authentik-outpost.priority: "100"
       traefik.http.routers.traefik-dashboard-authentik-outpost.service: authentik@docker
       traefik.http.routers.traefik-dashboard-authentik-outpost.tls: "true"
