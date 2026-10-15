@@ -32,7 +32,7 @@ fi
 printf '\nAuthentik-Grundkonfiguration\n'
 prompt domain "Basisdomain" "example.com"
 prompt authentik_fqdn "Hostname für Authentik" "authentik.${domain}"
-prompt authentik_tag "Authentik-Version (Release-Zweig oder exakter Tag)" "2026.5"
+prompt authentik_tag "Authentik-Version (Release-Zweig oder exakter Tag)" "2026.8"
 prompt pg_db "PostgreSQL-Datenbank" "authentik"
 prompt pg_user "PostgreSQL-Benutzer" "authentik"
 
